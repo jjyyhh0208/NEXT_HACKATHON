@@ -4,8 +4,9 @@ from .forms import *
 from .models import *
 from django.contrib.auth.decorators import login_required
 import logging
-from django.urls import reverse
-
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+import json
 
 logger = logging.getLogger(__name__)
 
@@ -77,5 +78,21 @@ def game(request, department_id, professor_id):
     logger.debug(f"Current username from session: {current_username}")
     return render(request, 'game.html', {'department': department, 'professor': professor, 'current_username': current_username})
 
+
 def index(request):
     return render(request, "game/index.html")
+
+
+@csrf_exempt
+def submit_score(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        username = data.get('username')
+        score = data.get('score')
+
+        user, created = User.objects.get_or_create(username=username)
+        user.score = score
+        user.save()
+
+        return JsonResponse({'isSuccess': 'true'})
+    return JsonResponse({'isSuccess': 'false'}, status=400)

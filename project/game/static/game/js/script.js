@@ -20,6 +20,35 @@ document.addEventListener('DOMContentLoaded', () => {
     let professorLooking = false;
     let score = 0;
     let pressStart = null;
+    const currentUsernameElement = document.getElementById('currentUsername');
+    const currentUsername = currentUsernameElement.textContent || currentUsernameElement.innerText;
+
+
+    function sendScore(score) {
+        // window.location.href = '/ranking';
+
+        fetch('/submit-score/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ 'username': currentUsername, 'score': score })
+        })
+        .then(response => response.json()) // 응답을 JSON으로 파싱
+        .then(data => {
+            if (data.isSuccess === 'true') {
+                // 랭킹 페이지로 리디렉션
+                window.location.href = '/ranking/';
+            } else {
+                alert('Failed to submit score.');
+            }
+            console.log('Score submitted:', data);
+        })
+        .catch((error) => {
+            console.error('Error submitting score:', error);
+        });
+    }
+
 
     function randomTime(min, max) {
         return min + Math.floor(Math.random() * (max - min));
@@ -36,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => {
             professorLooking = false;
             professor.style.backgroundColor = 'red'; // Professor looking away
-            const lookTime = randomTime(3000, 9000); // Random time professor looks forward
+            const lookTime = randomTime(1000, 3000); // Random time professor looks forward
             setTimeout(professorTurn, lookTime); // Set the next turn
         }, backTime); // Professor looks back for a random time
     }
@@ -48,7 +77,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 displayWarning();
                 canWarn = false; // 경고 후 경고 가능 상태 비활성화
                 if (warningCount >= 3) {
-                    window.location.href = 'punish.html';
+                    // window.location.href = 'ranking.html';
+                    sendScore(score);
                 }
                 backgroundMusic.pause(); // Stop music when warning is given
             }
@@ -93,7 +123,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     displayWarning();
                     canWarn = false; // 경고 후 경고 가능 상태 비활성화
                     if (warningCount >= 3) {
-                        window.location.href = 'punish.html';
+                        // window.location.href = 'ranking.html';
+                        sendScore(score);
                     }
                     backgroundMusic.pause(); // Stop music when warning is given
                 }
@@ -129,6 +160,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     });
+
 
     setTimeout(professorTurn, randomTime(minTime, maxTime)); // Initial call to start the loop
 });

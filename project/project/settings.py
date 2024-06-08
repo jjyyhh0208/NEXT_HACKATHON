@@ -4,12 +4,12 @@ import os
 from pathlib import Path
 import os
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
+BASE_DIR = Path(__file__).resolve().parent.parent
+
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = "django-insecure-404nvt4%!#vw-rr*o(df61qhya(15$r+el8=7-7mqn5^)ufwbd"
 DEBUG = True
@@ -83,7 +83,9 @@ USE_I18N = True
 USE_TZ = True
 
 STATIC_URL = "/static/"
-STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+STATICFILES_DIRS = [
+    BASE_DIR / 'game' / 'static',
+]
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
@@ -100,4 +102,3 @@ SESSION_COOKIE_SAMESITE = 'Lax'  # 크로스 사이트 요청에서 쿠키가 �
 # 세션 만료 설정
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 SESSION_COOKIE_AGE = 1209600  # 2주 (기본값)
-
