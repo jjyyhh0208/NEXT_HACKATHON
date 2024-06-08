@@ -6,14 +6,28 @@
         <title>Document</title>
     </head>
     <body>
-        <form method="post">
+        <h1>Add User</h1>
+        {% comment %} 한번 로그인했으면 {% endcomment %} {% if logged_in %}
+        <p>Welcome back, {{ username }}!</p>
+        <a href="{% url 'game' %}">Continue to Game</a>
+        {% comment %} 다시 설정바꾸고 싶으면 {% endcomment %} {% else %}
+        <form action="{% url 'add_user' %}" method="post">
             {% csrf_token %}
             <p>
-                <label for="{{ form.username.id_for_label }}">Nickname: </label>
-                <input type="text" name="{{ form.username.name }}" id="{{ form.username.id_for_label }}" />
-                {{ form.username }}
+                <label for="id_username">Nickname:</label>
+                <input type="text" name="username" id="id_username" maxlength="50" required />
             </p>
-            <button type="submit">PLAY</button>
+            <button type="submit">Play</button>
         </form>
+        {% if form.errors %}
+        <div style="color: red">
+            <strong>Please correct the following error(s):</strong>
+            <ul>
+                {% for field, errors in form.errors.items %}
+                <li>{{ field }}: {{ errors|striptags }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %} {% endif %}
     </body>
 </html>
