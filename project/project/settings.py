@@ -122,3 +122,18 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# settings.py
+
+# 세션 엔진 설정 (기본값은 Database-backed sessions)
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+
+# 세션 쿠키 설정
+SESSION_COOKIE_NAME = 'sessionid'  # 기본값
+SESSION_COOKIE_SECURE = False  # HTTPS가 아닌 환경에서는 False로 설정
+SESSION_COOKIE_SAMESITE = 'Lax'  # 크로스 사이트 요청에서 쿠키가 전송되지 않도록 설정 (필요에 따라 조정)
+
+# 세션 만료 설정
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+SESSION_COOKIE_AGE = 1209600  # 2주 (기본값)
+
