@@ -1,3 +1,22 @@
-<h1>Game</h1>
-<p>Logged in as: {{ current_username }}</p>
-<a href="{% url 'ranking' %}">Ranking</a>
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Professor's Photo</title>
+    </head>
+    <body>
+<<<<<<< HEAD
+        <h1>Welcome, {{ username }}!</h1>
+        <img src="{{ professor.photo.url }}" alt="Professor's Photo" />
+        <p>{{ professor.name }}</p>
+        <p>{{ professor.department.name }}</p>
+=======
+        <h1>Welcome, {{ current_username }}!</h1>
+        <img src="{{ professor.photo.url }}" alt="Professor's Photo" />
+        <p>{{ professor.name }}</p>
+        <p>{{ professor.department.name }}</p>
+        <a href="{% url 'ranking' %}">Ranking</a>
+>>>>>>> main
+    </body>
+</html>

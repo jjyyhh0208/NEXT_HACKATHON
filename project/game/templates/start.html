@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <form action="{% url 'start' %}" method="post">
+            {% csrf_token %}
+<<<<<<< HEAD
+            <p>
+                <label for="{{ form.username.id_for_label }}">Nickname: </label>
+                <input type="text" name="username" id="username" />
+            </p>
+            <label for="department">Department:</label>
+            <select id="department" name="department">
+                <option value="">Select Department</option>
+=======
+            <label for="department">학과:</label>
+            <select id="department" name="department">
+                <option value="">학과</option>
+>>>>>>> main
+                {% for department in departments %}
+                <option value="{{ department.id }}">{{ department.name }}</option>
+                {% endfor %}
+            </select>
+            <br />
+<<<<<<< HEAD
+            <label for="professor">Professor:</label>
+            <select id="professor" name="professor" disabled>
+                <option value="">Select Professor</option>
+=======
+            <label for="professor">교수명:</label>
+            <select id="professor" name="professor" disabled>
+                <option value="">교수명</option>
+>>>>>>> main
+                {% for professor in professors %}
+                <option value="{{ professor.id }}" data-department="{{ professor.department.id }}">
+                    {{ professor.name }}
+                </option>
+                {% endfor %}
+            </select>
+            <br />
+            <button type="submit">Play</button>
+        </form>
+
+        <script>
+            document.getElementById('department').addEventListener('change', function () {
+                var selectedDepartment = this.value;
+                var professorSelect = document.getElementById('professor');
+                var professorOptions = professorSelect.options;
+
+                // Enable or disable the professor select box
+                if (selectedDepartment) {
+                    professorSelect.disabled = false;
+                } else {
+                    professorSelect.disabled = true;
+                }
+
+                for (var i = 0; i < professorOptions.length; i++) {
+                    var option = professorOptions[i];
+                    if (option.getAttribute('data-department') === selectedDepartment || option.value === '') {
+                        option.style.display = 'block';
+                    } else {
+                        option.style.display = 'none';
+                    }
+                }
+                // Reset professor selection
+                professorSelect.value = '';
+            });
+        </script>
+    </body>
+</html>
