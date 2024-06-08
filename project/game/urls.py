@@ -12,4 +12,5 @@ urlpatterns = [
     path('ranking/', views.ranking, name='ranking'),
     path('start/', views.start, name='start'),
     path('game/<int:department_id>/<int:professor_id>', views.game, name='game'),
+    path('index/', views.index, name='index'),
 ]

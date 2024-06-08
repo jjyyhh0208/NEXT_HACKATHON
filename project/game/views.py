@@ -76,3 +76,6 @@ def game(request, department_id, professor_id):
     professor = Professor.objects.get(id=professor_id)
     logger.debug(f"Current username from session: {current_username}")
     return render(request, 'game.html', {'department': department, 'professor': professor, 'current_username': current_username})
+
+def index(request):
+    return render(request, "game/index.html")
