@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <h1>Add User</h1>
+        {% comment %} 한번 로그인했으면 {% endcomment %} {% if logged_in %}
+        <p>Welcome back, {{ username }}!</p>
+        <a>Continue to Game</a>
+        {% comment %} 다시 설정바꾸고 싶으면 {% endcomment %} {% else %}
+        <form action="{% url 'add_user' %}" method="post">
+            {% csrf_token %}
+            <p>
+                <label for="id_username">Nickname:</label>
+                <input type="text" name="username" id="id_username" maxlength="50" required />
+            </p>
+            <button type="submit">Next</button>
+        </form>
+        {% if form.errors %}
+        <div style="color: red">
+            <strong>Please correct the following error(s):</strong>
+            <ul>
+                {% for field, errors in form.errors.items %}
+                <li>{{ field }}: {{ errors|striptags }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %} {% endif %}
+    </body>
+</html>
