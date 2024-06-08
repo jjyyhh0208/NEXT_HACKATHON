@@ -9,7 +9,7 @@
         <h1>Add User</h1>
         {% comment %} 한번 로그인했으면 {% endcomment %} {% if logged_in %}
         <p>Welcome back, {{ username }}!</p>
-        <a href="{% url 'game' %}">Continue to Game</a>
+        <a>Continue to Game</a>
         {% comment %} 다시 설정바꾸고 싶으면 {% endcomment %} {% else %}
         <form action="{% url 'add_user' %}" method="post">
             {% csrf_token %}
