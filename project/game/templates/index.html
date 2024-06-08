@@ -10,6 +10,11 @@
             audio {
                 display: none;
             }
+            .student img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
         </style>
     </head>
     <body>
@@ -21,22 +26,56 @@
                 width="100%"
                 height="100%"
             />
-            <div class="professor" id="professor">
-                교수님 자리
+            <div
+                class="professor"
+                id="professor"
+                data-back-url="{% static 'game/images/professor_back.png' %}"
+                data-side-url="{% static 'game/images/prof_side.png' %}"
+            >
                 <div class="warning-popup" id="warningPopup"></div>
             </div>
+            <div id="currentUsername">{{current_username}}</div>
             <div class="students">
-                <div class="student" id="student1">1</div>
-                <div class="student" id="student2">2</div>
-                <div class="student" id="student3">3</div>
-                <div class="student" id="student4">4</div>
+                <div
+                    class="student"
+                    id="student1"
+                    data-static-url="{% static 'game/images/static_people.png' %}"
+                    data-cat-url="{% static 'game/images/cat_people.gif' %}"
+                    data-maratang-url="{% static 'game/images/maratang_people.gif' %}"
+                    data-korea-url="{% static 'game/images/korea_people.gif' %}"
+                >
+                    <img src="{% static 'game/images/static_people.png' %}" />
+                </div>
+                <div
+                    class="student"
+                    id="student2"
+                    data-static-url="{% static 'game/images/static_people.png' %}"
+                    data-cat-url="{% static 'game/images/cat_people.gif' %}"
+                    data-maratang-url="{% static 'game/images/maratang_people.gif' %}"
+                    data-korea-url="{% static 'game/images/korea_people.gif' %}"
+                >
+                    <img src="{% static 'game/images/static_people.png' %}" />
+                </div>
+                <div
+                    class="student"
+                    id="student4"
+                    data-static-url="{% static 'game/images/static.png' %}"
+                    data-cat-url="{% static 'game/images/cat.gif' %}"
+                    data-maratang-url="{% static 'game/images/maratang.gif' %}"
+                    data-korea-url="{% static 'game/images/korea.gif' %}"
+                >
+                    <img src="{% static 'game/images/static.png' %}" id="student4Img" />
+                </div>
             </div>
         </div>
-        <audio id="backgroundMusic">
+        <audio id="catMusic">
+            <source src="{% static 'game/audio/Cat.mp3' %}" type="audio/mpeg" />
+        </audio>
+        <audio id="maratangMusic">
+            <source src="{% static 'game/audio/maratang_song.mp3' %}" type="audio/mpeg" />
+        </audio>
+        <audio id="koreaMusic">
             <source src="{% static 'game/audio/민족의 아리아.mp3' %}" type="audio/mpeg" />
-            <source src="{% static 'game/audio/민족의 아리아.ogg' %}" type="audio/ogg" />
-            <source src="{% static 'game/audio/민족의 아리아.wav' %}" type="audio/wav" />
-            Your browser does not support the audio element.
         </audio>
         <audio id="alert1">
             <source src="{% static 'game/audio/alert1.mp3' %}" type="audio/mpeg" />
