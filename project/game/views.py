@@ -4,8 +4,9 @@ from .forms import *
 from .models import *
 from django.contrib.auth.decorators import login_required
 import logging
-from django.urls import reverse
-
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+import json
 
 logger = logging.getLogger(__name__)
 
@@ -71,8 +72,28 @@ def ranking(request):
 
 
 def game(request, professor_id):
-    professor = get_object_or_404(Professor, id=professor_id)
+
+    current_username = request.session.get('username')  # 세션에서 사용자 이름 가져오기
+    professor = Professor.objects.get(id=professor_id)
     ctx = {
-        'professor_photo': professor.photo.url if professor.photo else None
+        'professor_photo': professor.photo.url if professor.photo else None,
+        'professor': professor,
+        'current_username': current_username
     }
+
+    logger.debug(f"Current username from session: {current_username}")
     return render(request, 'game.html', ctx)
+
+
+def submit_score(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        username = data.get('username')
+        score = data.get('score')
+
+        user, created = User.objects.get_or_create(username=username)
+        user.score = score
+        user.save()
+
+        return JsonResponse({'isSuccess': 'true'})
+    return JsonResponse({'isSuccess': 'false'}, status=400)
