@@ -29,18 +29,18 @@ def add_user(request):
     else:
         form = UserForm()
     
-    return render(request, 'start.html', {'form': form})
+    return render(request, 'name.html', {'form': form})
 
-def start(request):
+def name(request):
     current_username = request.session.get('username')
     if current_username:
-        return render(request, 'start.html', {'logged_in': True, 'username': current_username})
-    return render(request, 'start.html', {'logged_in': False})
+        return render(request, 'name.html', {'logged_in': True, 'username': current_username})
+    return render(request, 'name.html', {'logged_in': False})
 
 
 # def logout(request):
 #     request.session.flush()  # 세션 데이터 삭제
-#     return redirect('start')
+#     return redirect('name')
 
 def ranking(request):
     users = User.objects.all().order_by('-score')
