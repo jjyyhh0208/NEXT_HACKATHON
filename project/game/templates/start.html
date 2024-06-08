@@ -6,14 +6,57 @@
         <title>Document</title>
     </head>
     <body>
-        <form method="post">
+        <form action="{% url 'start' %}" method="post">
             {% csrf_token %}
             <p>
                 <label for="{{ form.username.id_for_label }}">Nickname: </label>
-                <input type="text" name="{{ form.username.name }}" id="{{ form.username.id_for_label }}" />
-                {{ form.username }}
+                <input type="text" name="username" id="username" />
             </p>
-            <button type="submit">PLAY</button>
+            <label for="department">Department:</label>
+            <select id="department" name="department">
+                <option value="">Select Department</option>
+                {% for department in departments %}
+                <option value="{{ department.id }}">{{ department.name }}</option>
+                {% endfor %}
+            </select>
+            <br />
+            <label for="professor">Professor:</label>
+            <select id="professor" name="professor" disabled>
+                <option value="">Select Professor</option>
+                {% for professor in professors %}
+                <option value="{{ professor.id }}" data-department="{{ professor.department.id }}">
+                    {{ professor.name }}
+                </option>
+                {% endfor %}
+            </select>
+            <br />
+            <button type="submit">Play</button>
         </form>
+
+        <script>
+            document.getElementById('department').addEventListener('change', function () {
+                var selectedDepartment = this.value;
+                var professorSelect = document.getElementById('professor');
+                var professorOptions = professorSelect.options;
+
+                // Enable or disable the professor select box
+                if (selectedDepartment) {
+                    professorSelect.disabled = false;
+                } else {
+                    professorSelect.disabled = true;
+                }
+
+                for (var i = 0; i < professorOptions.length; i++) {
+                    var option = professorOptions[i];
+                    if (option.getAttribute('data-department') === selectedDepartment || option.value === '') {
+                        option.style.display = 'block';
+                    } else {
+                        option.style.display = 'none';
+                    }
+                }
+                // Reset professor selection
+                professorSelect.value = '';
+            });
+        </script>
     </body>
 </html>
