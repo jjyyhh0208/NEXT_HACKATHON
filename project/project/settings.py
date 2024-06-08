@@ -1,15 +1,28 @@
 # settings.py
-
+import json
 import os
 from pathlib import Path
 import os
+from django.core.exceptions import ImproperlyConfigured
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = "django-insecure-404nvt4%!#vw-rr*o(df61qhya(15$r+el8=7-7mqn5^)ufwbd"
-DEBUG = True
-ALLOWED_HOSTS = []
+secret_file = os.path.join(BASE_DIR, 'secrets.json')
+
+with open(secret_file) as f:
+    secrets = json.loads(f.read())
+    
+def get_secret(setting, secrets=secrets):
+    try:
+        return secrets[setting]
+    except KeyError:
+        error_msg = "Set the {} environment variable".format(setting)
+        raise ImproperlyConfigured(error_msg)
+
+DEBUG = False
+
+ALLOWED_HOSTS = ['*', '.pythonanywhere.com']
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -76,6 +89,9 @@ STATIC_URL = "/static/"
 STATICFILES_DIRS = [
     BASE_DIR / 'game' / 'static',
 ]
+
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
