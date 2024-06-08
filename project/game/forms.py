@@ -10,10 +10,6 @@ class UserForm(forms.ModelForm):
 
 
 class StartForm(forms.Form):
-<<<<<<< HEAD
-    username = forms.CharField(label='Nickname', max_length=100)
-=======
->>>>>>> main
     department = forms.ModelChoiceField(
         queryset=Department.objects.all(), label='Department')
     professor = forms.ModelChoiceField(

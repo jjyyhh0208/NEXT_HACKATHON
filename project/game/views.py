@@ -15,24 +15,6 @@ logger = logging.getLogger(__name__)
 def main(request):
     return render(request, 'main.html')
 
-<<<<<<< HEAD
-
-def start(request):
-    departments = Department.objects.all()
-    professors = Professor.objects.all()
-    if request.method == 'POST':
-        form = StartForm(request.POST)
-        if form.is_valid():
-            username = form.cleaned_data['username']
-            department = form.cleaned_data['department']
-            professor = form.cleaned_data['professor']
-            return redirect(reverse('game', args=[username, department.id, professor.id]))
-    else:
-        form = StartForm()
-    return render(request, 'start.html', {'form': form, 'departments': departments, 'professors': professors})
-
-=======
->>>>>>> main
 
 def add_user(request):
     if request.method == 'POST':
@@ -45,28 +27,12 @@ def add_user(request):
                 user.save()
             request.session['username'] = user.username  # 세션에 사용자 이름 저장
             request.session.modified = True  # 세션이 수정되었음을 명시
-            logger.debug(f"User {user.username} saved in session.")
-            logger.debug(f"Session data after saving: {
-                         request.session.items()}")
             return redirect('start')
         else:
             logger.debug(f"Form is not valid: {form.errors}")
     else:
         form = UserForm()
 
-<<<<<<< HEAD
-    ctx = {
-        'form': form,
-    }
-
-    return render(request, 'game.html', ctx)
-
-
-def game(request, username, department_id, professor_id):
-    department = Department.objects.get(id=department_id)
-    professor = Professor.objects.get(id=professor_id)
-    return render(request, 'game.html', {'username': username, 'department': department, 'professor': professor})
-=======
     return render(request, 'name.html', {'form': form})
 
 
@@ -110,4 +76,3 @@ def game(request, department_id, professor_id):
     professor = Professor.objects.get(id=professor_id)
     logger.debug(f"Current username from session: {current_username}")
     return render(request, 'game.html', {'department': department, 'professor': professor, 'current_username': current_username})
->>>>>>> main
