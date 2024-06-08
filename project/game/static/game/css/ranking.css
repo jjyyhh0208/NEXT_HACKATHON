@@ -1,0 +1,99 @@
+/* ranking.css */
+
+body {
+    background-color: #333; /* Dark background */
+    color: #fff;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; /* Retro game font */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+/* styles.css */
+@keyframes slideIn {
+    0% {
+        transform: translateY(100%);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+table {
+    border-collapse: collapse;
+    width: 80%;
+    max-width: 600px;
+    animation: slideIn 1s ease-out;
+}
+
+
+thead {
+    background-color: #383838; /* Green color for table header */
+}
+
+th, td {
+    padding: 15px;
+    text-align: center;
+    border-bottom: 1px solid #ddd; /* Add border bottom for table rows */
+}
+
+th {
+    font-size: 1.5em; /* Increase font size for table header */
+}
+
+tbody tr:nth-child(even) {
+    background-color: #555; /* Darker background color for even rows */
+}
+
+button {
+    margin-top: 50px;
+    padding: 15px 28px; /* Increase padding */
+    background-color:#ffffff; /* Blue color for buttons */
+    color: black;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 1.5em; /* Increase font size */
+    font-family: 'Press Start 2P', cursive; 
+    font-weight: bold;
+}
+
+button:hover {
+    background-color: #775fff /* Darker blue on hover */
+}
+
+
+@keyframes bounceIn {
+    0% {
+        transform: scale(0);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+h1 {
+    font-size: 5em;
+    animation: bounceIn 1s ease-out;
+}
+
+.bottom {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}

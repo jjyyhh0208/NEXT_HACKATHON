@@ -1,0 +1,62 @@
+/* start.css */
+
+body {
+    background-color: #333; /* Dark background */
+    font-family: 'Press Start 2P', cursive; /* Retro game font */
+}
+
+.container {
+    text-align: center;
+}
+
+h1 {
+    font-size: 3em; /* Larger font size */
+    margin-bottom: 20px;
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+form {
+    background-color: #000;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* White shadow for retro effect */
+    display: inline-block;
+}
+
+input[type="text"],
+select {
+    padding: 10px;
+    margin: 10px 0;
+    border: 2px solid #fff;
+    background-color: #444;
+    color: #fff;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 1em;
+    border-radius: 5px;
+}
+
+button {
+    margin-left: 10px;
+    padding: 10px 20px;
+    background-color: #ffffff; /* Green color for buttons */
+    color: #000000;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-family: 'Press Start 2P', cursive; /* Retro game font */
+    font-size: 1.2em; /* Increase font size */
+    font-weight: bold;
+}
+
+button:hover {
+    background-color: #2dffa7; /* Darker green on hover */
+}
+
+video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -25%);
+}
