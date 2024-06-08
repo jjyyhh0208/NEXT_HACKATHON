@@ -1,33 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        {% load static %}
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Document</title>
+        <title>닉네임 입력</title>
+        <link rel="stylesheet" href="{% static 'game/css/name.css' %}" />
     </head>
     <body>
-        <h1>Add User</h1>
-        {% comment %} 한번 로그인했으면 {% endcomment %} {% if logged_in %}
-        <p>Welcome back, {{ username }}!</p>
-        <a>Continue to Game</a>
-        {% comment %} 다시 설정바꾸고 싶으면 {% endcomment %} {% else %}
-        <form action="{% url 'add_user' %}" method="post">
-            {% csrf_token %}
-            <p>
-                <label for="id_username">Nickname:</label>
-                <input type="text" name="username" id="id_username" maxlength="50" required />
-            </p>
-            <button type="submit">Next</button>
-        </form>
-        {% if form.errors %}
-        <div style="color: red">
-            <strong>Please correct the following error(s):</strong>
-            <ul>
-                {% for field, errors in form.errors.items %}
-                <li>{{ field }}: {{ errors|striptags }}</li>
-                {% endfor %}
-            </ul>
+        <div class="container">
+            <div class="upper">
+                <h1>닉네임을 입력하세요</h1>
+                {% if logged_in %}
+                <p>Welcome back, {{ username }}!</p>
+                <a href="{% url 'game' %}">Continue to Game</a>
+                {% else %}
+                <form action="{% url 'add_user' %}" method="post" id="nicknameForm">
+                    {% csrf_token %}
+                    <p>
+                        <label for="id_username">Nickname:</label>
+                        <input
+                            type="text"
+                            name="username"
+                            id="id_username"
+                            maxlength="50"
+                            placeholder="닉네임 입력"
+                            required
+                        />
+                    </p>
+                    <button onclick="startGame()" type="submit">NEXT</button>
+                </form>
+                {% if form.errors %}
+                <div style="color: red">
+                    <strong>Please correct the following error(s):</strong>
+                    <ul>
+                        {% for field, errors in form.errors.items %}
+                        <li>{{ field }}: {{ errors|striptags }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %} {% endif %}
+            </div>
         </div>
-        {% endif %} {% endif %}
+        <script>
+            // 닉네임 입력 칸에 포커스를 설정하는 함수
+            function focusNicknameInput() {
+                document.getElementById('id_username').focus();
+            }
+
+            // 게임 시작 함수
+            function startGame() {
+                var nickname = document.getElementById('id_username').value;
+                if (!nickname) {
+                    alert('닉네임을 입력하세요.');
+                    return;
+                }
+                document.getElementById('nicknameForm').submit();
+            }
+
+            // 페이지 로드 시 닉네임 입력 칸에 포커스 설정
+            window.onload = focusNicknameInput;
+        </script>
     </body>
 </html>

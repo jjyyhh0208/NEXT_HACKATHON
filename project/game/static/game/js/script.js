@@ -1,7 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const professorBack = document.getElementById('professorImage'); //교수님 뒷모습
     const professor = document.getElementById('professor');
     const professorBackUrl = professor.getAttribute('data-back-url');
     const professorSideUrl = professor.getAttribute('data-side-url');
+    const professorPhotoUrl = professor.getAttribute('data-photo-url');
 
     const student1 = document.getElementById('student1');
     const student2 = document.getElementById('student2');
@@ -53,6 +55,33 @@ document.addEventListener('DOMContentLoaded', () => {
     let professorIntermediateLooking = false;
     let score = 0;
     let pressStart = null;
+    const currentUsernameElement = document.getElementById('currentUsername');
+    const currentUsername = currentUsernameElement.textContent || currentUsernameElement.innerText;
+
+    function sendScore(score) {
+        // window.location.href = '/ranking';
+
+        fetch('/submit-score/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ username: currentUsername, score: score }),
+        })
+            .then((response) => response.json()) // 응답을 JSON으로 파싱
+            .then((data) => {
+                if (data.isSuccess === 'true') {
+                    // 랭킹 페이지로 리디렉션
+                    window.location.href = '/punish/';
+                } else {
+                    alert('Failed to submit score.');
+                }
+                console.log('Score submitted:', data);
+            })
+            .catch((error) => {
+                console.error('Error submitting score:', error);
+            });
+    }
 
     function randomTime(min, max) {
         return min + Math.floor(Math.random() * (max - min));
@@ -71,13 +100,13 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => {
             professorIntermediateLooking = false; // 중간 상태 종료
             professorLooking = true; // 교수님이 학생들을 보고 있는 상태로 설정
-            professor.style.backgroundColor = 'green'; // 교수님이 학생들을 보는 상태로 설정 (예: 녹색)
-            professor.style.backgroundImage = ''; // 이미지를 제거하여 앞을 보는 상태로 설정
+
+            professor.style.backgroundImage = `url(${professorPhotoUrl})`; // 이미지를 제거하여 앞을 보는 상태로 설정
             updateStudentImages(); // 학생들의 이미지를 업데이트 (춤을 멈춤)
 
             const backTime = randomTime(500, 3000); // 교수님이 학생들을 돌아보는 시간 (0.5초에서 3초 사이)
             const lookTime = randomTime(minTime, maxTime); // 교수님이 뒤를 보고 있는 시간 (minTime과 maxTime 사이의 랜덤 값)
-
+            checkStudents();
             setTimeout(() => {
                 professorLooking = false; // 교수님이 뒤를 보고 있는 상태로 설정
                 professor.style.backgroundColor = 'transparent'; // 배경색을 투명으로 설정
@@ -92,13 +121,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function checkStudents() {
+        canWarn = true;
         if (professorLooking && canWarn) {
             if (pressStart !== null) {
                 warningCount++;
                 displayWarning();
                 canWarn = false;
                 if (warningCount >= 3) {
-                    window.location.href = 'punish.html';
+                    // window.location.href = 'ranking.html';
+                    sendScore(score);
                 }
                 backgroundMusic.pause();
             }
@@ -158,22 +189,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     document.addEventListener('keydown', (event) => {
-        if (event.code === 'Space') {
+        if (event.code === 'Space' && pressStart === null) {
             if (professorLooking && canWarn) {
-                if (pressStart !== null) {
-                    warningCount++;
-                    displayWarning();
-                    canWarn = false;
-                    if (warningCount >= 3) {
-                        window.location.href = 'punish.html';
-                    }
-                    backgroundMusic.pause();
+                warningCount++;
+                displayWarning();
+                canWarn = false;
+                if (warningCount >= 3) {
+                    // window.location.href = 'ranking.html';
+                    sendScore(score);
                 }
+                backgroundMusic.pause();
             } else {
-                if (pressStart === null) {
-                    pressStart = Date.now();
-                }
-                setGifImage(studentImgs[2], selectedMusic.gifs.student4);
+                pressStart = Date.now();
+                updateStudentImages(); // GIF를 설정
                 if (backgroundMusic.paused) {
                     backgroundMusic.play().catch((error) => {
                         console.error('Failed to play music:', error);
@@ -184,11 +212,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     document.addEventListener('keyup', (event) => {
-        if (pressStart !== null) {
-            score += Date.now() - pressStart;
-            pressStart = null;
-            studentImgs[2].src = staticUrlStudent4;
-            backgroundMusic.pause();
+        if (event.code === 'Space') {
+            if (pressStart !== null) {
+                score += Date.now() - pressStart;
+                pressStart = null;
+                updateStudentImages();
+                backgroundMusic.pause();
+            }
         }
     });
 

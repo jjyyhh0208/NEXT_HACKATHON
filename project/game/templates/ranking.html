@@ -3,22 +3,37 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Ranking</title>
-        <style>
-            .highlight {
-                background-color: yellow;
-            }
-        </style>
+        <title>교수님 몰래 춤추기 게임</title>
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'game/css/ranking.css' %}" />
+        <!-- Font Awesome 아이콘 라이브러리 -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
     </head>
     <body>
-        <h1>Ranking</h1>
-        <ul>
-            {% for user in users %}
-            <li class="{% if user == current_user %}highlight{% endif %}">
-                {{ forloop.counter }}. {{ user.username }} - Score: {{ user.score }}
-            </li>
-            {% endfor %}
-        </ul>
-        <a href="{% url 'start' %}">Retry</a>
+        <div class="container">
+            <h1 style="color: #2dffa7">Game Over</h1>
+            <h2>Ranking</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Nickname</th>
+                        <th>Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                    <tr class="{% if user == current_user %}current-user{% endif %}">
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.score }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div class="bottom">
+                <button onclick="window.location.href='{% url 'start' %}'"><i class="fas fa-redo"></i> 다시하기</button>
+            </div>
+        </div>
     </body>
 </html>

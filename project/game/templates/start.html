@@ -1,34 +1,37 @@
+<!-- start.html -->
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        {% load static %}
         <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Document</title>
+        <title>교수님 몰래 춤추기 게임</title>
+        <link rel="stylesheet" href="{% static 'game/css/start.css' %}" />
     </head>
     <body>
-        <form action="{% url 'start' %}" method="post">
-            {% csrf_token %}
-            <label for="department">학과:</label>
-            <select id="department" name="department">
-                <option value="">학과</option>
-                {% for department in departments %}
-                <option value="{{ department.id }}">{{ department.name }}</option>
-                {% endfor %}
-            </select>
-            <br />
-            <label for="professor">교수명:</label>
-            <select id="professor" name="professor" disabled>
-                <option value="">교수명</option>
-                {% for professor in professors %}
-                <option value="{{ professor.id }}" data-department="{{ professor.department.id }}">
-                    {{ professor.name }}
-                </option>
-                {% endfor %}
-            </select>
-            <br />
-            <button type="submit">Play</button>
-        </form>
-
+        <div class="container">
+            <h1>교수님 몰~래 춤추기 게임</h1>
+            <form id="startForm">
+                {% csrf_token %}
+                <select id="department" name="department">
+                    <option value="" disabled selected>학과 선택</option>
+                    {% for department in departments %}
+                    <option value="{{ department.id }}">{{ department.name }}</option>
+                    {% endfor %}
+                </select>
+                <br />
+                <select id="professor" name="professor" disabled>
+                    <option value="" disabled selected>교수님 선택</option>
+                    {% for professor in professors %}
+                    <option value="{{ professor.id }}" data-department="{{ professor.department.id }}">
+                        {{ professor.name }}
+                    </option>
+                    {% endfor %}
+                </select>
+                <br />
+                <button type="submit">Play</button>
+            </form>
+        </div>
+        <video autoplay loop source src={% static 'game/videos/dance.mp4' %} type="video/mp4" />
         <script>
             document.getElementById('department').addEventListener('change', function () {
                 var selectedDepartment = this.value;
@@ -52,6 +55,14 @@
                 }
                 // Reset professor selection
                 professorSelect.value = '';
+            });
+
+            document.getElementById('startForm').addEventListener('submit', function (e) {
+                e.preventDefault();
+                var professorId = document.getElementById('professor').value;
+                if (professorId) {
+                    window.location.href = "{% url 'game' 0 %}".replace('0', professorId);
+                }
             });
         </script>
     </body>

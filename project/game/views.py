@@ -4,8 +4,9 @@ from .forms import *
 from .models import *
 from django.contrib.auth.decorators import login_required
 import logging
-from django.urls import reverse
-
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+import json
 
 logger = logging.getLogger(__name__)
 
@@ -70,12 +71,37 @@ def ranking(request):
     return render(request, 'ranking.html', ctx)
 
 
-def game(request, department_id, professor_id):
-    current_username = request.session.get('username')  # 세션에서 사용자 이름 가져오기
-    department = Department.objects.get(id=department_id)
-    professor = Professor.objects.get(id=professor_id)
-    logger.debug(f"Current username from session: {current_username}")
-    return render(request, 'game.html', {'department': department, 'professor': professor, 'current_username': current_username})
+def game(request, professor_id):
 
-def index(request):
-    return render(request, "game/index.html")
+    current_username = request.session.get('username')  # 세션에서 사용자 이름 가져오기
+    professor = Professor.objects.get(id=professor_id)
+    ctx = {
+        'professor_photo': professor.photo.url if professor.photo else None,
+        'professor': professor,
+        'current_username': current_username
+    }
+
+    logger.debug(f"Current username from session: {current_username}")
+    return render(request, 'game.html', ctx)
+
+@csrf_exempt
+def submit_score(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        username = data.get('username')
+        score = data.get('score')
+
+        user, created = User.objects.get_or_create(username=username)
+
+        if user.score is None or score > user.score:
+            user.score = score
+            user.save()
+            return JsonResponse({'isSuccess': 'true', 'updated': True})
+        else:
+            return JsonResponse({'isSuccess': 'true', 'updated': False})
+
+    return JsonResponse({'isSuccess': 'false'}, status=400)
+
+
+def punish(request):
+    return render(request, 'punish.html')
