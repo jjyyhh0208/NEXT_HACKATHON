@@ -101,3 +101,7 @@ def submit_score(request):
             return JsonResponse({'isSuccess': 'true', 'updated': False})
 
     return JsonResponse({'isSuccess': 'false'}, status=400)
+
+
+def punish(request):
+    return render(request, 'punish.html')

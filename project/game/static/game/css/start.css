@@ -7,11 +7,14 @@ body {
 
 .container {
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 h1 {
     font-size: 3em; /* Larger font size */
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     color: #fff;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
 }
@@ -21,10 +24,12 @@ form {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* White shadow for retro effect */
-    display: inline-block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
 }
 
-input[type="text"],
 select {
     padding: 10px;
     margin: 10px 0;
@@ -59,4 +64,5 @@ video {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -25%);
+    margin-top: 20px;
 }

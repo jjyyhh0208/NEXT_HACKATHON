@@ -19,7 +19,6 @@ body {
     text-align: center;
 }
 
-/* styles.css */
 @keyframes slideIn {
     0% {
         transform: translateY(100%);
@@ -36,12 +35,12 @@ table {
     animation: slideIn 1s ease-out;
 }
 
-
 thead {
     background-color: #383838; /* Green color for table header */
 }
 
-th, td {
+th,
+td {
     padding: 15px;
     text-align: center;
     border-bottom: 1px solid #ddd; /* Add border bottom for table rows */
@@ -58,21 +57,20 @@ tbody tr:nth-child(even) {
 button {
     margin-top: 50px;
     padding: 15px 28px; /* Increase padding */
-    background-color:#ffffff; /* Blue color for buttons */
+    background-color: #ffffff; /* Blue color for buttons */
     color: black;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
     font-size: 1.5em; /* Increase font size */
-    font-family: 'Press Start 2P', cursive; 
+    font-family: 'Press Start 2P', cursive;
     font-weight: bold;
 }
 
 button:hover {
-    background-color: #775fff /* Darker blue on hover */
+    background-color: #775fff; /* Darker blue on hover */
 }
-
 
 @keyframes bounceIn {
     0% {
@@ -96,4 +94,9 @@ h1 {
     display: flex;
     justify-content: center;
     gap: 30px;
+}
+
+.current-user {
+    background-color: yellow !important;
+    color: black !important; /* 텍스트 색상을 검정으로 설정 */
 }
