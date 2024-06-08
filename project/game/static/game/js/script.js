@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const professorBack = document.getElementById('professorImage');
+    const professorBack = document.getElementById('professorImage'); //교수님 뒷모습
     const professor = document.getElementById('professor');
     const professorPhotoUrl = professor.getAttribute('data-photo-url');
 
@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .then((data) => {
                 if (data.isSuccess === 'true') {
                     // 랭킹 페이지로 리디렉션
-                    window.location.href = '/ranking/';
+                    window.location.href = '/punish/';
                 } else {
                     alert('Failed to submit score.');
                 }
@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
         professorLooking = true;
         if (professorLooking) {
             professorBack.style.display = 'none';
-            professor.style.backgroundImage = `url(${professorPhotoUrl})`;
+            professor.style.backgroundImage = `url(${professorPhotoUrl})`; //교수님이 뒤 돌았을 때 얼굴을 보여주는 이미지
             professor.style.backgroundSize = 'cover';
             professor.style.display = 'block';
         } else {

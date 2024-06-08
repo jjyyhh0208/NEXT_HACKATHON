@@ -1,28 +1,29 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
         <title>교수님 몰래 춤추기 게임</title>
-        <link rel="stylesheet" href="{% static 'css/punish.css' %}" />
+        <link rel="stylesheet" href="{% static 'game/css/punish.css' %}" />
     </head>
     <body>
         <div class="container">
             <video autoplay loop>
-                <source src="punish.mp4" type="video/mp4" />
+                <source src="{% static 'game/videos/punish.mp4' %}" type="video/mp4" />
             </video>
             <p style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8)">
                 교수님께서 <span style="color: red">극대노</span>하셨습니다
             </p>
             <div class="image-wrapper">
-                <img src="bubble.png" />
+                <img src="{% static 'game/images/bubble.png' %}" />
                 <p>이럴수가!</p>
             </div>
         </div>
         <script>
             // 8초 후에 ranking 페이지로 이동
             setTimeout(function () {
-                window.location.href = 'ranking.html';
-            }, 8000); // 8초 후에 이동 (단위: 밀리초)
+                window.location.href = '/ranking';
+            }, 5000); // 8초 후에 이동 (단위: 밀리초)
         </script>
     </body>
 </html>

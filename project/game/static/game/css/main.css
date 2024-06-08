@@ -4,7 +4,7 @@
 
 body {
     background-color: #333; /* Dark background */
-    background-image: url('koreauniv.png'); 
+    background-image: url('../images/koreauniv.png');
     background-repeat: no-repeat; /* 이미지 반복 안 함 */
     background-position: center; /* 이미지 중앙 정렬 */
     background-size: auto; /* 이미지 크기 조정 안 함 */
@@ -30,8 +30,6 @@ h1 {
     position: relative; /* Make the h1 a containing block for the pseudo-element */
     z-index: 1; /* Place the text above the pseudo-element */
 }
-
-
 
 .speech-bubble {
     position: absolute;
