@@ -1,58 +1,55 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Document</title>
-    </head>
-    <body>
-        <form action="{% url 'start' %}" method="post">
-            {% csrf_token %}
-            <label for="department">학과:</label>
-            <select id="department" name="department">
-                <option value="">학과</option>
-                {% for department in departments %}
-                <option value="{{ department.id }}">{{ department.name }}</option>
-                {% endfor %}
-            </select>
-            <br />
-            <label for="professor">교수명:</label>
-            <select id="professor" name="professor" disabled>
-                <option value="">교수명</option>
-                {% for professor in professors %}
-                <option value="{{ professor.id }}" data-department="{{ professor.department.id }}">
-                    {{ professor.name }}
-                </option>
-                {% endfor %}
-            </select>
-            <br />
-            <button type="submit">Play</button>
-        </form>
+<!-- start.html -->
+<form id="startForm">
+    {% csrf_token %}
+    <label for="department">학과:</label>
+    <select id="department" name="department">
+        <option value="">학과</option>
+        {% for department in departments %}
+        <option value="{{ department.id }}">{{ department.name }}</option>
+        {% endfor %}
+    </select>
+    <br />
+    <label for="professor">교수명:</label>
+    <select id="professor" name="professor" disabled>
+        <option value="">교수명</option>
+        {% for professor in professors %}
+        <option value="{{ professor.id }}" data-department="{{ professor.department.id }}">{{ professor.name }}</option>
+        {% endfor %}
+    </select>
+    <br />
+    <button type="submit">Play</button>
+</form>
 
-        <script>
-            document.getElementById('department').addEventListener('change', function () {
-                var selectedDepartment = this.value;
-                var professorSelect = document.getElementById('professor');
-                var professorOptions = professorSelect.options;
+<script>
+    document.getElementById('department').addEventListener('change', function () {
+        var selectedDepartment = this.value;
+        var professorSelect = document.getElementById('professor');
+        var professorOptions = professorSelect.options;
 
-                // Enable or disable the professor select box
-                if (selectedDepartment) {
-                    professorSelect.disabled = false;
-                } else {
-                    professorSelect.disabled = true;
-                }
+        // Enable or disable the professor select box
+        if (selectedDepartment) {
+            professorSelect.disabled = false;
+        } else {
+            professorSelect.disabled = true;
+        }
 
-                for (var i = 0; i < professorOptions.length; i++) {
-                    var option = professorOptions[i];
-                    if (option.getAttribute('data-department') === selectedDepartment || option.value === '') {
-                        option.style.display = 'block';
-                    } else {
-                        option.style.display = 'none';
-                    }
-                }
-                // Reset professor selection
-                professorSelect.value = '';
-            });
-        </script>
-    </body>
-</html>
+        for (var i = 0; i < professorOptions.length; i++) {
+            var option = professorOptions[i];
+            if (option.getAttribute('data-department') === selectedDepartment || option.value === '') {
+                option.style.display = 'block';
+            } else {
+                option.style.display = 'none';
+            }
+        }
+        // Reset professor selection
+        professorSelect.value = '';
+    });
+
+    document.getElementById('startForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+        var professorId = document.getElementById('professor').value;
+        if (professorId) {
+            window.location.href = "{% url 'game' 0 %}".replace('0', professorId);
+        }
+    });
+</script>

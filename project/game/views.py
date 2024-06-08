@@ -71,19 +71,20 @@ def ranking(request):
     return render(request, 'ranking.html', ctx)
 
 
-def game(request, department_id, professor_id):
+def game(request, professor_id):
+
     current_username = request.session.get('username')  # 세션에서 사용자 이름 가져오기
-    department = Department.objects.get(id=department_id)
     professor = Professor.objects.get(id=professor_id)
+    ctx = {
+        'professor_photo': professor.photo.url if professor.photo else None,
+        'professor': professor,
+        'current_username': current_username
+    }
+
     logger.debug(f"Current username from session: {current_username}")
-    return render(request, 'game.html', {'department': department, 'professor': professor, 'current_username': current_username})
+    return render(request, 'game.html', ctx)
 
 
-def index(request):
-    return render(request, "game/index.html")
-
-
-@csrf_exempt
 def submit_score(request):
     if request.method == 'POST':
         data = json.loads(request.body)

@@ -1,5 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const professorBack = document.getElementById('professorImage');
     const professor = document.getElementById('professor');
+    const professorPhotoUrl = professor.getAttribute('data-photo-url');
+
     const students = [
         document.getElementById('student1'),
         document.getElementById('student2'),
@@ -12,11 +15,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const alert2 = document.getElementById('alert2');
 
     let warningCount = 0;
-    let canWarn = true; // 플래그 추가
-    let maxTime = 5000; // max time for professor to turn around (adjusted to be 3 to 5 seconds)
-    let minTime = 3000; // min time for professor to turn around
-    let maxLookTime = 3000; // max time professor looks forward
-    let minLookTime = 1000; // min time professor looks forward
+    let canWarn = true;
+    let maxTime = 5000;
+    let minTime = 3000;
+    let maxLookTime = 3000;
+    let minLookTime = 1000;
     let professorLooking = false;
     let score = 0;
     let pressStart = null;
@@ -56,37 +59,46 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function professorTurn() {
         professorLooking = true;
-        canWarn = true; // 교수님이 뒤를 볼 때 경고 가능 상태 초기화
-        professor.style.backgroundColor = 'green'; // Professor looking back
+        if (professorLooking) {
+            professorBack.style.display = 'none';
+            professor.style.backgroundImage = `url(${professorPhotoUrl})`;
+            professor.style.backgroundSize = 'cover';
+            professor.style.display = 'block';
+        } else {
+            professor.style.display = 'none';
+        }
         checkStudents();
 
-        // Professor looks back for a random time, then looks forward for a random time
-        const backTime = randomTime(500, 1000); // Random time professor looks back (0.5s to 1s)
+        const backTime = randomTime(500, 1000); // 교수님이 돌아보는 시간 랜덤 설정 0.5-1초
+
         setTimeout(() => {
             professorLooking = false;
-            professor.style.backgroundColor = 'red'; // Professor looking away
-            const lookTime = randomTime(1000, 3000); // Random time professor looks forward
-            setTimeout(professorTurn, lookTime); // Set the next turn
-        }, backTime); // Professor looks back for a random time
+            professor.style.backgroundImage = '';
+            professorBack.style.display = 'block';
+            professor.style.display = 'block';
+            const lookTime = randomTime(3000, 5000);
+            setTimeout(professorTurn, lookTime);
+        }, backTime);
     }
 
     function checkStudents() {
+        canWarn = true;
         if (professorLooking && canWarn) {
             if (pressStart !== null) {
                 warningCount++;
                 displayWarning();
-                canWarn = false; // 경고 후 경고 가능 상태 비활성화
+                canWarn = false;
                 if (warningCount >= 3) {
                     // window.location.href = 'ranking.html';
                     sendScore(score);
                 }
-                backgroundMusic.pause(); // Stop music when warning is given
+                backgroundMusic.pause();
             }
             students.forEach((student, index) => {
                 if (index < 3) {
-                    student.style.backgroundColor = 'blue'; // Automatic students stop dancing
+                    student.style.backgroundColor = 'blue';
                 } else {
-                    student.style.backgroundColor = pressStart ? 'green' : 'blue'; // User controlled student
+                    student.style.backgroundColor = pressStart ? 'green' : 'blue';
                 }
             });
         }
@@ -116,23 +128,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.addEventListener('keydown', (event) => {
         if (event.code === 'Space') {
-            console.log('Space key down event detected');
             if (professorLooking && canWarn) {
                 if (pressStart !== null) {
                     warningCount++;
                     displayWarning();
-                    canWarn = false; // 경고 후 경고 가능 상태 비활성화
+                    canWarn = false;
                     if (warningCount >= 3) {
                         // window.location.href = 'ranking.html';
                         sendScore(score);
                     }
-                    backgroundMusic.pause(); // Stop music when warning is given
+                    backgroundMusic.pause();
                 }
             } else {
                 if (pressStart === null) {
                     pressStart = Date.now();
                 }
-                students[3].style.backgroundColor = 'green'; // User controlled student starts dancing
+                students[3].style.backgroundColor = 'green';
                 if (backgroundMusic.paused) {
                     backgroundMusic
                         .play()
@@ -141,7 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         })
                         .catch((error) => {
                             console.error('Failed to play music:', error);
-                        }); // Start or resume music
+                        });
                 }
             }
         }
@@ -149,18 +160,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.addEventListener('keyup', (event) => {
         if (event.code === 'Space') {
-            console.log('Space key up event detected');
             if (pressStart !== null) {
                 score += Date.now() - pressStart;
                 pressStart = null;
-                students[3].style.backgroundColor = 'blue'; // User controlled student stops dancing
-                backgroundMusic.pause(); // Pause music
-                console.log('Music paused');
-                console.log('Total score:', score); // Score logging
+                students[3].style.backgroundColor = 'blue';
+                backgroundMusic.pause();
             }
         }
     });
 
-
-    setTimeout(professorTurn, randomTime(minTime, maxTime)); // Initial call to start the loop
+    setTimeout(professorTurn, randomTime(minTime, maxTime));
 });
