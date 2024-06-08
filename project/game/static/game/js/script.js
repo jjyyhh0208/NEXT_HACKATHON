@@ -26,32 +26,30 @@ document.addEventListener('DOMContentLoaded', () => {
     const currentUsernameElement = document.getElementById('currentUsername');
     const currentUsername = currentUsernameElement.textContent || currentUsernameElement.innerText;
 
-
     function sendScore(score) {
         // window.location.href = '/ranking';
 
         fetch('/submit-score/', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ 'username': currentUsername, 'score': score })
+            body: JSON.stringify({ username: currentUsername, score: score }),
         })
-        .then(response => response.json()) // 응답을 JSON으로 파싱
-        .then(data => {
-            if (data.isSuccess === 'true') {
-                // 랭킹 페이지로 리디렉션
-                window.location.href = '/ranking/';
-            } else {
-                alert('Failed to submit score.');
-            }
-            console.log('Score submitted:', data);
-        })
-        .catch((error) => {
-            console.error('Error submitting score:', error);
-        });
+            .then((response) => response.json()) // 응답을 JSON으로 파싱
+            .then((data) => {
+                if (data.isSuccess === 'true') {
+                    // 랭킹 페이지로 리디렉션
+                    window.location.href = '/ranking/';
+                } else {
+                    alert('Failed to submit score.');
+                }
+                console.log('Score submitted:', data);
+            })
+            .catch((error) => {
+                console.error('Error submitting score:', error);
+            });
     }
-
 
     function randomTime(min, max) {
         return min + Math.floor(Math.random() * (max - min));

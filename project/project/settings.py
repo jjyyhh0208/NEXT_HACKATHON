@@ -4,20 +4,8 @@ import os
 from pathlib import Path
 import os
 
-<<<<<<< HEAD
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-=======
-
-
-
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
->>>>>>> 0507ac72a25f7741fb7e657867f09f07a62b841e
 
 SECRET_KEY = "django-insecure-404nvt4%!#vw-rr*o(df61qhya(15$r+el8=7-7mqn5^)ufwbd"
 DEBUG = True
@@ -88,8 +76,6 @@ STATIC_URL = "/static/"
 STATICFILES_DIRS = [
     BASE_DIR / 'game' / 'static',
 ]
-<<<<<<< HEAD
-=======
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
@@ -100,7 +86,6 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
->>>>>>> 0507ac72a25f7741fb7e657867f09f07a62b841e
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 

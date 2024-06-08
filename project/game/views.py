@@ -84,7 +84,7 @@ def game(request, professor_id):
     logger.debug(f"Current username from session: {current_username}")
     return render(request, 'game.html', ctx)
 
-
+@csrf_exempt
 def submit_score(request):
     if request.method == 'POST':
         data = json.loads(request.body)
@@ -92,8 +92,12 @@ def submit_score(request):
         score = data.get('score')
 
         user, created = User.objects.get_or_create(username=username)
-        user.score = score
-        user.save()
 
-        return JsonResponse({'isSuccess': 'true'})
+        if user.score is None or score > user.score:
+            user.score = score
+            user.save()
+            return JsonResponse({'isSuccess': 'true', 'updated': True})
+        else:
+            return JsonResponse({'isSuccess': 'true', 'updated': False})
+
     return JsonResponse({'isSuccess': 'false'}, status=400)
