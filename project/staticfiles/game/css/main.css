@@ -1,0 +1,101 @@
+/* main.css */
+
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+body {
+    background-color: #333; /* Dark background */
+    background-image: url('../images/koreauniv.png');
+    background-repeat: no-repeat; /* 이미지 반복 안 함 */
+    background-position: center; /* 이미지 중앙 정렬 */
+    background-size: auto; /* 이미지 크기 조정 안 함 */
+    color: #fff;
+    font-family: 'Press Start 2P', cursive; /* Retro game font */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    text-align: center;
+    position: relative;
+}
+
+h1 {
+    font-size: 4em; /* Larger font size */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    margin-top: -30px;
+    position: relative; /* Make the h1 a containing block for the pseudo-element */
+    z-index: 1; /* Place the text above the pseudo-element */
+}
+
+.speech-bubble {
+    position: absolute;
+    top: -70px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 150px;
+    background-color: #fff;
+    color: #000;
+    border: 2px solid #000;
+    border-radius: 15px;
+    padding: 10px;
+    text-align: center;
+    font-family: 'Press Start 2P', cursive;
+    margin-top: -80px;
+}
+
+.speech-bubble:after {
+    content: '';
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 10px 10px 0;
+    border-style: solid;
+    border-color: #fff transparent transparent transparent;
+}
+
+.blinking-text {
+    animation: blink 1s steps(5, start) infinite;
+}
+
+@keyframes blink {
+    to {
+        visibility: hidden;
+    }
+}
+
+button {
+    margin-top: 150px; /* Increase this value to move the button further down */
+    padding: 23px 38px; /* Increase padding */
+    background-color: #5132ff; /* Green color for buttons */
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s; /* Add border-color transition */
+    font-family: 'Press Start 2P', cursive; /* Retro game font */
+    font-size: 1.5em; /* Increase font size */
+}
+
+button:hover {
+    background-color: #775fff; /* Slightly darker green on hover */
+}
+
+@keyframes rotate-once {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* '몰래' 글자에 애니메이션 적용 */
+h1 span.rotate {
+    display: inline-block;
+    animation: rotate-once 1s linear; /* 3초 동안 회전하며 한 번만 반복 */
+}

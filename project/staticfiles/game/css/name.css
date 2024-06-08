@@ -1,0 +1,89 @@
+/* nickname.css */
+
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+body {
+    background-color: #333; /* Dark background */
+    background-image: url('../images/koreauniv.png');
+    background-repeat: no-repeat; /* 이미지 반복 안 함 */
+    background-position: center; /* 이미지 중앙 정렬 */
+    background-size: auto; /* 이미지 크기 조정 안 함 */
+    color: #fff;
+    font-family: 'Press Start 2P', cursive; /* Retro game font */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.upper {
+    margin-bottom: 110px; /* upper와 아래 버튼 사이의 간격 조정 */
+}
+
+.container {
+    text-align: center;
+    padding: 20px 30px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column; /* 요소들을 세로 방향으로 정렬 */
+    justify-content: flex-start; /* 요소들을 위쪽으로 정렬 */
+    align-items: center; /* 요소들을 수평 중앙 정렬 */
+}
+
+h1 {
+    font-size: 2.5em; /* Larger font size */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    margin-bottom: 20px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+input[type='text'] {
+    margin-bottom: 20px;
+    padding: 15px 20px;
+    width: 80%;
+    max-width: 200px;
+    border: 3px solid #fff;
+    border-radius: 10px;
+    background-color: #000; /* Black background */
+    color: #ffffff; /* Bright green text */
+    font-family: 'Press Start 2P', cursive; /* Retro game font */
+    font-size: 1.2em;
+    font-weight: bold;
+    text-align: center;
+}
+
+@keyframes cursor-blink {
+    0% {
+        border-color: #fff; /* White border when cursor is hidden */
+    }
+    50% {
+        border-color: transparent; /* Transparent border when cursor is visible */
+    }
+    100% {
+        border-color: #fff; /* White border when cursor is hidden */
+    }
+}
+
+button {
+    margin-top: 10px;
+    padding: 15px 30px; /* Increase padding */
+    background-color: #2dffa7; /* Green color for buttons */
+    color: #000000;
+    border: 5px solid #000000;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s; /* Add border-color transition */
+    font-family: 'Press Start 2P', cursive; /* Retro game font */
+    font-size: 1.5em; /* Increase font size */
+}
+
+button:hover {
+    background-color: #1fb778; /* Darker green on hover */
+}
