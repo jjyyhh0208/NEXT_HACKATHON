@@ -53,3 +53,86 @@
         }
     });
 </script>
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>교수님 몰래 춤추기 게임</title>
+        <link rel="stylesheet" href="{% static 'css/start.css' %}" />
+    </head>
+    <body>
+        <div class="container">
+            <h1>교수님 몰~래 춤추기 게임</h1>
+            <form id="startForm">
+                <input type="text" id="nickname" placeholder="닉네임 입력" required />
+                <select id="department" required>
+                    <option value="" disabled selected>학과 선택</option>
+                    <option value="경영학과">경영학과</option>
+                    <option value="노어노문학과">노어노문학과</option>
+                    <option value="미디어학부">미디어학부</option>
+                    <option value="전기전자공학부">전기전자공학부</option>
+                    <option value="중어중문학과">중어중문학과</option>
+                    <option value="컴퓨터공학과">컴퓨터공학과</option>
+                    <!-- 추가 학과 옵션 -->
+                </select>
+                <select id="professor" required>
+                    <option value="" disabled selected>교수님 선택</option>
+                </select>
+                <button type="button" onclick="startGame()">Start !</button>
+            </form>
+        </div>
+        <video autoplay loop>
+            <source src="dance.mp4" type="video/mp4" />
+        </video>
+        <script>
+            const professorList = {
+                경영학과: '김태규교수님',
+                미디어학부: '김성철교수님',
+                노어노문학과: '최정현교수님',
+                중어중문학과: '고점복교수님',
+                컴퓨터공학과: '이도길교수님',
+                전기전자공학부: '최린교수님',
+                // 추가 학과에 해당하는 교수님 추가
+            };
+
+            const departmentSelect = document.getElementById('department');
+            const professorSelect = document.getElementById('professor');
+
+            departmentSelect.addEventListener('change', function () {
+                const selectedDepartment = this.value;
+                const professors = professorList[selectedDepartment];
+                professorSelect.innerHTML = ''; // 기존 옵션 초기화
+
+                if (professors) {
+                    professors.split(',').forEach(function (professor) {
+                        const option = document.createElement('option');
+                        option.textContent = professor.trim();
+                        option.value = professor.trim();
+                        professorSelect.appendChild(option);
+                    });
+                } else {
+                    const option = document.createElement('option');
+                    option.textContent = '교수님 없음';
+                    option.value = '';
+                    professorSelect.appendChild(option);
+                }
+            });
+
+            function startGame() {
+                const nickname = document.getElementById('nickname').value;
+                const department = document.getElementById('department').value;
+                const professor = document.getElementById('professor').value;
+
+                if (nickname && department && professor) {
+                    localStorage.setItem('nickname', nickname);
+                    localStorage.setItem('department', department);
+                    localStorage.setItem('professor', professor);
+                    window.location.href = 'game.html';
+                } else {
+                    alert('모든 필드를 입력해주세요.');
+                }
+            }
+        </script>
+    </body>
+</html>
