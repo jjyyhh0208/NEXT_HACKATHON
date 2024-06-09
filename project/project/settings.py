@@ -8,19 +8,9 @@ from django.core.exceptions import ImproperlyConfigured
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-secret_file = os.path.join(BASE_DIR, 'secrets.json')
+SECRET_KEY="django-insecure-404nvt4%!#vw-rr*o(df61qhya(15$r+el8=7-7mqn5^)ufwbd"
 
-with open(secret_file) as f:
-    secrets = json.loads(f.read())
-    
-def get_secret(setting, secrets=secrets):
-    try:
-        return secrets[setting]
-    except KeyError:
-        error_msg = "Set the {} environment variable".format(setting)
-        raise ImproperlyConfigured(error_msg)
-
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*', '.pythonanywhere.com']
 
@@ -90,7 +80,7 @@ STATICFILES_DIRS = [
     BASE_DIR / 'game' / 'static',
 ]
 
-STATIC_ROOT = BASE_DIR / "staticfiles"
+STATIC_ROOT = BASE_DIR / 'static'
 
 
 MEDIA_URL = '/media/'
