@@ -18,12 +18,18 @@
                 <img src="{% static 'game/images/bubble.png' %}" />
                 <p>이럴수가!</p>
             </div>
+            <audio id="effect-sound" src="{% static "game/audio/punch.mp3" %}"></audio>
         </div>
         <script>
-            // 8초 후에 ranking 페이지로 이동
+            window.onload = function() {
+                var audio = document.getElementById('effect-sound');
+                audio.play();
+            }
+    
+            // 3초 후에 ranking 페이지로 이동
             setTimeout(function () {
                 window.location.href = '/ranking';
-            }, 5000); // 8초 후에 이동 (단위: 밀리초)
+            }, 3000); // 3초 후에 이동 (단위: 밀리초)
         </script>
     </body>
 </html>
